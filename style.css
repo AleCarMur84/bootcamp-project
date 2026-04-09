@@ -191,5 +191,14 @@ body {
     .content {
         width: 100%;
     }
+    #task-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--margen-pequeno);
+    }
+    #task-form button {
+    margin-left: 0;
+    width: 100%;
+    }
 }
 
