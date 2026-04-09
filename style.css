@@ -178,3 +178,18 @@ body {
     outline: 2px solid var(--color-primario);
     outline-offset: 2px;
 }
+
+@media (max-width: 768px) {
+   
+    .container {
+        flex-direction: column;
+    }
+ .stats {
+        width: 100%;
+        order: 2;
+    }
+    .content {
+        width: 100%;
+    }
+}
+
