@@ -155,3 +155,26 @@ h1 {
     flex: 1;
     margin-right: var(--margen-medio);
 }
+
+body {
+    line-height: 1.5;
+}
+
+#task-input {
+    font-size: 16px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--margen-medio);
+}
+
+#task-list {
+    margin-top: var(--margen-medio);
+}
+
+.card .delete-task:focus {
+    outline: 2px solid var(--color-primario);
+    outline-offset: 2px;
+}
