@@ -1,0 +1,157 @@
+/* Variables globales */
+:root {
+    /* Colores */
+    --color-primario: #4f46e5;
+    --color-secundario: #e0e7ff;
+    --color-fondo: #f9fafb;
+    --color-texto: #111827;
+    --color-texto-secundario: #6b7280;
+
+    /* Tipografía */
+    --fuente-principal: 'Inter', sans-serif;
+    --tamano-texto: 16px;
+
+    /* Espaciado */
+    --padding-pequeno: 0.5rem;
+    --padding-medio: 1rem;
+    --padding-grande: 1.5rem;
+    --margen-pequeno: 0.5rem;
+    --margen-medio: 1rem;
+    --margen-grande: 1.5rem;
+
+    /* Bordes y sombras */
+    --radio-bordes: 0.5rem;
+    --sombra: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Reset CSS básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos iniciales para body y texto */
+body {
+    font-family: var(--fuente-principal);
+    font-size: var(--tamano-texto);
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+}
+
+/* Estilo del título principal */
+h1 {
+    color: var(--color-primario);
+    font-size: 2rem; /* más grande que el tamaño base */
+    text-align: center;
+    margin-bottom: var(--margen-grande);
+    text-transform: uppercase; /* Hace que todo el texto sea mayúsculas */
+}
+
+/* Layout principal con Flexbox */
+.container {
+    display: flex; /* activa Flexbox */
+    gap: var(--margen-grande); /* espacio entre columnas */
+    padding: var(--padding-medio);
+    flex-wrap: wrap; /* permite que en móvil se apilen */
+}
+
+/* Sección principal de tareas */
+.content {
+    flex: 1 1 60%; /* ocupa 60% del ancho en escritorio, flexible */
+    min-width: 280px; /* para que no se haga demasiado pequeña en móvil */
+}
+
+/* Panel lateral de estadísticas */
+.stats {
+    flex: 0 0 200px; /* ancho fijo de 200px */
+    min-width: 200px;
+    background-color: var(--color-secundario);
+    padding: var(--padding-medio);
+    border-radius: var(--radio-bordes);
+    box-shadow: var(--sombra);
+}
+
+/* Texto de la tarea */
+.card .task-text {
+    flex: 1; /* ocupa todo el espacio disponible entre checkbox y botón */
+    margin-right: var(--margen-medio);
+}
+
+/* Botón eliminar */
+.card .delete-task {
+    background-color: var(--color-primario);
+    color: #fff;
+    border: none;
+    padding: var(--padding-pequeno) var(--padding-medio);
+    border-radius: var(--radio-bordes);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+/* Hover sobre botón eliminar */
+.card .delete-task:hover {
+    background-color: #3730a3; /* morado más oscuro */
+}
+
+.card .task-checkbox {
+    margin-right: var(--margen-medio);
+}
+
+/* Inputs del formulario */
+#task-input {
+    padding: var(--padding-pequeno) var(--padding-medio);
+    border: 1px solid #d1d5db; /* gris claro */
+    border-radius: var(--radio-bordes);
+    outline: none; /* quita el borde por defecto al enfocar */
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Estado hover y focus del input */
+#task-input:hover,
+#task-input:focus {
+    border-color: var(--color-primario);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2); /* sombra azul suave */
+}
+
+/* Botón añadir */
+#task-form button {
+    background-color: var(--color-primario);
+    color: #fff;
+    border: none;
+    padding: var(--padding-pequeno) var(--padding-medio);
+    border-radius: var(--radio-bordes);
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    margin-left: var(--margen-pequeno);
+}
+
+/* Hover y focus del botón añadir */
+#task-form button:hover,
+#task-form button:focus {
+    background-color: #3730a3; /* morado más oscuro */
+    transform: scale(1.05); /* efecto pequeño de “crecer” */
+}
+
+/* Tarjeta de tarea */
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff;
+    padding: var(--padding-medio);
+    margin-bottom: var(--margen-medio);
+    border-radius: var(--radio-bordes);
+    box-shadow: var(--sombra);
+}
+
+/* Checkbox */
+.card .task-checkbox {
+    margin-right: var(--margen-medio);
+}
+
+/* Contenedor del texto */
+.card .task-text {
+    flex: 1;
+    margin-right: var(--margen-medio);
+}
