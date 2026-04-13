@@ -73,11 +73,22 @@ filteredTasks.forEach(task => {
     const li = document.createElement("li")
 
     li.innerHTML = `
-<input type="checkbox" class="task-checkbox" data-id="${task.id}" ${task.completed ? "checked" : ""}>
-      <span style="text-decoration: ${task.completed ? 'line-through' : 'none'}">
+<input type="checkbox"
+  class="task-checkbox"
+  data-id="${task.id}"
+  aria-label="Marcar tarea como completada"
+  ${task.completed ? "checked" : ""}>
+
+<span style="text-decoration: ${task.completed ? 'line-through' : 'none'}">
   ${task.title}
 </span>
-      <button class="delete-task" data-id="${task.id}">Eliminar</button>
+
+<button
+  class="delete-task"
+  data-id="${task.id}"
+  aria-label="Eliminar tarea ${task.title}">
+  Eliminar
+</button>
     `
 
     taskList.appendChild(li)
