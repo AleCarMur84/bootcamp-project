@@ -10,7 +10,7 @@ const task = {
   createdAt: new Date()
 }
 
-let tasks = []
+let tasks = JSON.parse(localStorage.getItem("tasks")) || []
 
 const form = document.querySelector("#task-form")
 const input = document.querySelector("#task-input")
@@ -98,4 +98,11 @@ taskList.addEventListener("click", function (e) {
 function updateUI() {
   renderTasks()
   renderStats()
+  saveTasks()
 }
+
+function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasks))
+}
+
+updateUI()
