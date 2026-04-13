@@ -73,7 +73,7 @@ filteredTasks.forEach(task => {
     const li = document.createElement("li")
 
     li.innerHTML = `
-     <input type="checkbox" class="task-checkbox" data-id="${task.id}"> 
+<input type="checkbox" class="task-checkbox" data-id="${task.id}" ${task.completed ? "checked" : ""}>
       <span style="text-decoration: ${task.completed ? 'line-through' : 'none'}">
   ${task.title}
 </span>
@@ -126,7 +126,7 @@ searchInput.addEventListener("input", function (e) {
 
 darkBtn.addEventListener("click", function () {
   document.body.classList.toggle("dark")
-  
+
 darkMode = document.body.classList.contains("dark")
   localStorage.setItem("darkMode", darkMode)
 })
