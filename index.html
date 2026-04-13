@@ -5,9 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TaskFlow</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
     <h1>TaskFlow</h1>
+    <button id="dark-mode-toggle">
+      Modo Oscuro  
+    </button>
 
     <div class="container">
         <!-- Sección principal de tareas -->
@@ -22,15 +26,22 @@
                 <button type="submit">Añadir</button>
             </form>
 
-            <!-- Lista donde se mostrarán las tareas -->
-            <ul id="task-list">
-                <li class="card">
+<input type="text" id="search-input" placeholder="Buscar tarea...">
+
+        <div>
+  <button onclick="setFilter('all')">Todas</button>
+  <button onclick="setFilter('pending')">Pendientes</button>
+  <button onclick="setFilter('completed')">Completadas</button>
+</div>
+
+<!-- Lista donde se mostrarán las tareas -->
+<ul id="task-list">
+    <li class="card">
         <input type="checkbox" class="task-checkbox">
         <span class="task-text">Tarea de prueba</span>
         <button class="delete-task">Eliminar</button>
     </li>
 </ul>
-
             <!-- Plantilla base para cada tarea -->
             <template id="task-template">
                 <li class="card">

@@ -11,10 +11,21 @@ const task = {
 }
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || []
+let filter = "all"
+let searchText = ""
+
+let darkMode = localStorage.getItem("darkMode") === "true"
+
+if (darkMode) {
+  document.body.classList.add("dark")
+}
 
 const form = document.querySelector("#task-form")
 const input = document.querySelector("#task-input")
+const searchInput = document.querySelector("#search-input")
 
+
+const darkBtn = document.querySelector("#dark-mode-toggle")
 
 form.addEventListener("submit", function (e) {
   e.preventDefault()
@@ -43,7 +54,22 @@ function renderTasks() {
 
   taskList.innerHTML = ""
 
-  tasks.forEach(task => {
+let filteredTasks = tasks
+
+if (filter === "pending") {
+  filteredTasks = tasks.filter(t => !t.completed)
+}
+
+if (filter === "completed") {
+  filteredTasks = tasks.filter(t => t.completed)
+}
+
+filteredTasks = filteredTasks.filter(task =>
+  task.title.toLowerCase().includes(searchText)
+)
+
+filteredTasks.forEach(task => {
+
     const li = document.createElement("li")
 
     li.innerHTML = `
@@ -51,7 +77,7 @@ function renderTasks() {
       <span style="text-decoration: ${task.completed ? 'line-through' : 'none'}">
   ${task.title}
 </span>
-      <button class="delete-task">Eliminar</button>
+      <button class="delete-task" data-id="${task.id}">Eliminar</button>
     `
 
     taskList.appendChild(li)
@@ -73,11 +99,9 @@ function renderStats() {
 taskList.addEventListener("click", function (e) {
    if (e.target.classList.contains("delete-task")) {
  
-     const li = e.target.parentElement
-    li.remove()
- 
-     const title = li.querySelector("span").textContent
-     tasks = tasks.filter(task => task.title !== title)
+const id = Number(e.target.dataset.id)
+
+    tasks = tasks.filter(task => task.id !== id)
     updateUI()
    }
  })
@@ -95,6 +119,18 @@ taskList.addEventListener("click", function (e) {
   }
 })
 
+searchInput.addEventListener("input", function (e) {
+  searchText = e.target.value.toLowerCase()
+  updateUI()
+})
+
+darkBtn.addEventListener("click", function () {
+  document.body.classList.toggle("dark")
+  
+darkMode = document.body.classList.contains("dark")
+  localStorage.setItem("darkMode", darkMode)
+})
+
 function updateUI() {
   renderTasks()
   renderStats()
@@ -106,3 +142,8 @@ function saveTasks() {
 }
 
 updateUI()
+
+function setFilter(value) {
+  filter = value
+  updateUI()
+}
