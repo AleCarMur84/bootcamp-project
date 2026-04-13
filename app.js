@@ -108,14 +108,19 @@ function renderStats() {
 }
 
 taskList.addEventListener("click", function (e) {
-   if (e.target.classList.contains("delete-task")) {
- 
-const id = Number(e.target.dataset.id)
+  if (e.target.classList.contains("delete-task")) {
 
-    tasks = tasks.filter(task => task.id !== id)
-    updateUI()
-   }
- })
+    const id = Number(e.target.dataset.id)
+
+    const li = e.target.parentElement
+    li.classList.add("delete-animation")
+
+    setTimeout(() => {
+      tasks = tasks.filter(task => task.id !== id)
+      updateUI()
+    }, 300)
+  }
+})
 
  taskList.addEventListener("change", function (e) {
   if (e.target.classList.contains("task-checkbox")) {
@@ -158,3 +163,5 @@ function setFilter(value) {
   filter = value
   updateUI()
 }
+
+console.log("deploy OK")

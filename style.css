@@ -221,3 +221,16 @@ input:focus {
     outline-offset: 2px;
 }
 
+li {
+  transition: all 0.2s ease;
+}
+
+li:hover {
+  transform: scale(1.02);
+}
+
+.delete-animation {
+  opacity: 0;
+  transform: translateX(20px);
+  transition: all 0.3s ease;
+}
