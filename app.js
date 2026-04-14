@@ -1,167 +1,173 @@
-const taskList = document.querySelector("#task-list")
-const stats = document.querySelector("#stats")
+const taskListElement = document.querySelector("#task-list");
+const statsElement = document.querySelector("#stats");
 
-console.log("JS cargado")
+console.log("JS cargado");
 
-const task = {
+const exampleTask = {
   id: Date.now(),
   title: "Ejemplo de tarea",
   completed: false,
   createdAt: new Date()
-}
+};
 
-let tasks = JSON.parse(localStorage.getItem("tasks")) || []
-let filter = "all"
-let searchText = ""
+let storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let currentFilter = "all";
+let currentSearchQuery = "";
 
-let darkMode = localStorage.getItem("darkMode") === "true"
+let darkMode = localStorage.getItem("darkMode") === "true";
 
 if (darkMode) {
-  document.body.classList.add("dark")
+  document.body.classList.add("dark");
 }
 
-const form = document.querySelector("#task-form")
-const input = document.querySelector("#task-input")
-const searchInput = document.querySelector("#search-input")
+const form = document.querySelector("#task-form");
+const input = document.querySelector("#task-input");
+const searchInput = document.querySelector("#search-input");
+const darkBtn = document.querySelector("#dark-mode-toggle");
 
+form.addEventListener("submit", handleFormSubmit);
 
-const darkBtn = document.querySelector("#dark-mode-toggle")
+function handleFormSubmit(e) {
+  e.preventDefault();
 
-form.addEventListener("submit", function (e) {
-  e.preventDefault()
+  const title = input.value.trim();
+  if (title === "") return;
 
-  if (input.value.trim() === "") return
+  const newTask = createTask(title);
+  addTask(newTask);
 
-  const newTask = {
+  input.value = "";
+  updateUI();
+}
+
+function createTask(title) {
+  return {
     id: Date.now(),
-    title: input.value,
+    title,
     completed: false,
     createdAt: new Date()
-  }
+  };
+}
 
-  tasks.push(newTask)
-
-  console.log(tasks)
-
-  input.value = ""
-
-    updateUI()
-})
+function addTask(task) {
+  storedTasks.push(task);
+  console.log(storedTasks);
+}
 
 function renderTasks() {
-    
-  console.log(tasks)
+  function getFilteredTasks(tasks, filter, searchText) {
+    let filtered = tasks;
 
-  taskList.innerHTML = ""
+    if (filter === "pending") {
+      filtered = filtered.filter(t => !t.completed);
+    } else if (filter === "completed") {
+      filtered = filtered.filter(t => t.completed);
+    }
 
-let filteredTasks = tasks
+    if (searchText.trim() !== "") {
+      filtered = filtered.filter(t =>
+        t.title.toLowerCase().includes(searchText.trim().toLowerCase())
+      );
+    }
 
-if (filter === "pending") {
-  filteredTasks = tasks.filter(t => !t.completed)
-}
+    return filtered;
+  }
 
-if (filter === "completed") {
-  filteredTasks = tasks.filter(t => t.completed)
-}
-
-filteredTasks = filteredTasks.filter(task =>
-  task.title.toLowerCase().includes(searchText)
-)
-
-filteredTasks.forEach(task => {
-
-    const li = document.createElement("li")
+  function createTaskElement(task) {
+    const li = document.createElement("li");
 
     li.innerHTML = `
-<input type="checkbox"
-  class="task-checkbox"
-  data-id="${task.id}"
-  aria-label="Marcar tarea como completada"
-  ${task.completed ? "checked" : ""}>
+      <input type="checkbox"
+        class="task-checkbox"
+        data-id="${task.id}"
+        ${task.completed ? "checked" : ""}>
+      <span style="text-decoration: ${task.completed ? 'line-through' : 'none'}">
+        ${task.title}
+      </span>
+      <button class="delete-task" data-id="${task.id}">
+        Eliminar
+      </button>
+    `;
 
-<span style="text-decoration: ${task.completed ? 'line-through' : 'none'}">
-  ${task.title}
-</span>
+    return li;
+  }
 
-<button
-  class="delete-task"
-  data-id="${task.id}"
-  aria-label="Eliminar tarea ${task.title}">
-  Eliminar
-</button>
-    `
+  function renderTaskList(tasks) {
+    taskListElement.innerHTML = "";
+    tasks.forEach(task => {
+      const li = createTaskElement(task);
+      taskListElement.appendChild(li);
+    });
+  }
 
-    taskList.appendChild(li)
-  })
+  const filteredTasks = getFilteredTasks(
+    storedTasks,
+    currentFilter,
+    currentSearchQuery
+  );
+
+  renderTaskList(filteredTasks);
 }
 
 function renderStats() {
-  const total = tasks.length
-  const completed = tasks.filter(t => t.completed).length
-  const pending = total - completed
+  const total = storedTasks.length;
+  const completed = storedTasks.filter(t => t.completed).length;
+  const pending = total - completed;
 
-  stats.innerHTML = `
+  statsElement.innerHTML = `
     <p>Total: ${total}</p>
     <p>Completadas: ${completed}</p>
     <p>Pendientes: ${pending}</p>
-  `
+  `;
 }
 
-taskList.addEventListener("click", function (e) {
+taskListElement.addEventListener("click", function (e) {
   if (e.target.classList.contains("delete-task")) {
+    const id = Number(e.target.dataset.id);
 
-    const id = Number(e.target.dataset.id)
-
-    const li = e.target.parentElement
-    li.classList.add("delete-animation")
-
-    setTimeout(() => {
-      tasks = tasks.filter(task => task.id !== id)
-      updateUI()
-    }, 300)
+    storedTasks = storedTasks.filter(task => task.id !== id);
+    updateUI();
   }
-})
+});
 
- taskList.addEventListener("change", function (e) {
+taskListElement.addEventListener("change", function (e) {
   if (e.target.classList.contains("task-checkbox")) {
+    const id = Number(e.target.dataset.id);
 
-    const id = Number(e.target.dataset.id)
+    const task = storedTasks.find(t => t.id === id);
+    task.completed = e.target.checked;
 
-    const task = tasks.find(t => t.id === id)
-
-    task.completed = e.target.checked
-
-    updateUI()
+    updateUI();
   }
-})
+});
 
 searchInput.addEventListener("input", function (e) {
-  searchText = e.target.value.toLowerCase()
-  updateUI()
-})
+  currentSearchQuery = e.target.value.toLowerCase();
+  updateUI();
+});
 
 darkBtn.addEventListener("click", function () {
-  document.body.classList.toggle("dark")
+  document.body.classList.toggle("dark");
 
-darkMode = document.body.classList.contains("dark")
-  localStorage.setItem("darkMode", darkMode)
-})
+  darkMode = document.body.classList.contains("dark");
+  localStorage.setItem("darkMode", darkMode);
+});
 
 function updateUI() {
-  renderTasks()
-  renderStats()
-  saveTasks()
+  renderTasks();
+  renderStats();
+  saveTasks();
 }
 
 function saveTasks() {
-  localStorage.setItem("tasks", JSON.stringify(tasks))
+  localStorage.setItem("tasks", JSON.stringify(storedTasks));
 }
 
-updateUI()
+updateUI();
 
 function setFilter(value) {
-  filter = value
-  updateUI()
+  currentFilter = value;
+  updateUI();
 }
 
-console.log("deploy OK")
+console.log("deploy OK");
