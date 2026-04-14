@@ -27,11 +27,23 @@ const darkBtn = document.querySelector("#dark-mode-toggle");
 
 form.addEventListener("submit", handleFormSubmit);
 
+/**
+ * Maneja el envío del formulario de tareas
+ * @param {Event} e - evento del formulario
+ */
+
 function handleFormSubmit(e) {
   e.preventDefault();
 
   const title = input.value.trim();
-  if (title === "") return;
+  const cleanTitle = title.toLowerCase();
+  if (title.length < 3) return;
+
+  const exists = storedTasks.some(
+    task => task.title.toLowerCase() === cleanTitle
+  );
+  
+  if (exists) return;
 
   const newTask = createTask(title);
   addTask(newTask);
@@ -39,6 +51,12 @@ function handleFormSubmit(e) {
   input.value = "";
   updateUI();
 }
+
+/**
+ * Crea una nueva tarea
+ * @param {string} title - título de la tarea
+ * @returns {Object} tarea creada
+ */
 
 function createTask(title) {
   return {
@@ -49,13 +67,40 @@ function createTask(title) {
   };
 }
 
+/**
+ * Añade una tarea al array de tareas
+ * @param {Object} task - tarea a añadir
+ */
+
 function addTask(task) {
   storedTasks.push(task);
   console.log(storedTasks);
 }
 
+/**
+ * Renderiza las tareas en pantalla aplicando filtros y búsqueda
+ */
+
 function renderTasks() {
-  function getFilteredTasks(tasks, filter, searchText) {
+  const filteredTasks = getFilteredTasks(
+    storedTasks,
+    currentFilter,
+    currentSearchQuery
+  );
+
+  renderTaskList(filteredTasks);
+}
+
+
+/**
+ * Filtra las tareas según el estado y el texto de búsqueda
+ * @param {Array} tasks - lista de tareas
+ * @param {string} filter - filtro actual (all, pending, completed)
+ * @param {string} searchText - texto de búsqueda
+ * @returns {Array} lista de tareas filtradas
+ */
+
+function getFilteredTasks(tasks, filter, searchText) {
     let filtered = tasks;
 
     if (filter === "pending") {
@@ -100,14 +145,8 @@ function renderTasks() {
     });
   }
 
-  const filteredTasks = getFilteredTasks(
-    storedTasks,
-    currentFilter,
-    currentSearchQuery
-  );
-
-  renderTaskList(filteredTasks);
-}
+ 
+  
 
 function renderStats() {
   const total = storedTasks.length;

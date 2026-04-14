@@ -43,4 +43,111 @@ Cursor mejoró la función suma añadiendo validación de tipos de datos, evitan
 ### Ejemplo 2
 Cursor refactorizó el código separando la función suma en un archivo independiente (mathUtils.js) y actualizando automáticamente las importaciones en test.js, mejorando la organización del proyecto.
 
+# Cursor Workflow - Model Context Protocol (MCP)
 
+## 1. ¿Qué es el Model Context Protocol (MCP)?
+
+El Model Context Protocol (MCP) es un estándar que permite conectar una inteligencia artificial con herramientas externas y con el sistema de archivos del entorno de trabajo.
+
+Gracias a MCP, la IA puede:
+- Leer archivos del proyecto
+- Explorar carpetas
+- Analizar código directamente
+- Interactuar con herramientas externas (GitHub, filesystem, APIs, etc.)
+
+En Cursor, MCP permite que la IA tenga contexto real del proyecto en lugar de trabajar solo con texto introducido manualmente.
+
+---
+
+## 2. Configuración de MCP en Cursor
+
+La configuración de MCP en Cursor se realiza mediante un archivo de configuración en el proyecto:
+
+
+Este archivo define los servidores MCP que se van a utilizar.
+
+---
+
+## 3. Instalación del servidor MCP
+
+En este proyecto se ha utilizado el servidor:
+
+- filesystem MCP
+
+Este servidor permite acceder a los archivos del proyecto local.
+
+Se ejecuta mediante Node.js usando npx.
+
+---
+
+## 4. Configuración utilizada
+
+La configuración aplicada en el proyecto es la siguiente:
+
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "C:\\Users\\aleja\\OneDrive\\Escritorio\\TaskFlow"
+      ]
+    }
+  }
+}
+
+## 5. Comprobación del funcionamiento de MCP
+
+Para comprobar que MCP funcionaba correctamente, se realizaron pruebas de acceso al sistema de archivos del proyecto.
+
+La IA fue capaz de listar los archivos y carpetas del proyecto, incluyendo:
+
+- index.html  
+- app.js  
+- style.css  
+- README.md  
+- docs/  
+
+Esto demuestra que el servidor MCP filesystem está correctamente conectado y operativo.
+
+---
+
+## 6. Consultas realizadas con MCP
+
+Se realizaron varias consultas para comprobar el funcionamiento del sistema MCP.
+
+Las consultas realizadas fueron:
+
+- Listado de archivos del proyecto TaskFlow  
+- Exploración de la estructura de carpetas  
+- Lectura del archivo app.js  
+- Análisis del archivo index.html  
+- Revisión del archivo README.md  
+
+Estas consultas demuestran que la IA puede acceder al proyecto mediante MCP.
+
+---
+
+## 7. Utilidad de MCP en proyectos reales
+
+El Model Context Protocol es útil en proyectos reales porque permite que la IA trabaje directamente con el entorno de desarrollo.
+
+Gracias a MCP se puede:
+
+- Analizar automáticamente proyectos de software  
+- Detectar errores en el código  
+- Automatizar tareas de desarrollo  
+- Integrar herramientas externas como GitHub  
+- Mejorar la productividad del desarrollador  
+
+---
+
+## 8. Conclusión
+
+El MCP permite que la inteligencia artificial tenga acceso directo al proyecto dentro del entorno de desarrollo.
+
+En este proyecto, se ha utilizado el servidor filesystem MCP para acceder al proyecto TaskFlow, permitiendo analizar su estructura y contenido de forma automática.
+
+Esto demuestra la utilidad del MCP como herramienta de desarrollo moderna.
