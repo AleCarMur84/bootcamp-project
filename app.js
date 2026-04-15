@@ -231,6 +231,12 @@ function markAllCompleted() {
   updateUI();
 }
 
+function clearCompletedTasks() {
+  storedTasks = storedTasks.filter(task => !task.completed);
+
+  updateUI();
+}
+
 console.log("deploy OK");
 
 
