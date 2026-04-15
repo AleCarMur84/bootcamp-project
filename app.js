@@ -204,9 +204,19 @@ function saveTasks() {
 
 updateUI();
 
+function sortTasksAZ() {
+  storedTasks.sort((a, b) => {
+    return a.title.localeCompare(b.title);
+  });
+
+  updateUI();
+}
+
 function setFilter(value) {
   currentFilter = value;
   updateUI();
 }
 
 console.log("deploy OK");
+
+
