@@ -223,6 +223,14 @@ function setFilter(value) {
   updateUI();
 }
 
+function markAllCompleted() {
+  storedTasks.forEach(task => {
+    task.completed = true;
+  });
+
+  updateUI();
+}
+
 console.log("deploy OK");
 
 
