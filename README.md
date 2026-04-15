@@ -27,3 +27,84 @@ Se han eliminado varias tareas y se ha verificado que desaparecen correctamente.
 Se ha recargado la página para comprobar que los datos se mantienen gracias a LocalStorage.
 
 https://bootcamp-project-swart.vercel.app
+
+---
+
+## Versión mejorada del proyecto
+
+TaskFlow es una aplicación web de gestión de tareas para un restaurante.
+
+Permite gestionar tareas de forma sencilla, centralizada y eficiente.
+
+### Funcionalidades
+
+- Crear tareas
+- Editar tareas
+- Eliminar tareas
+- Filtrar tareas (todas, pendientes, completadas)
+- Buscar tareas por texto
+- Marcar todas como completadas
+- Borrar tareas completadas
+- Persistencia con LocalStorage
+
+### Tecnologías
+
+- HTML
+- CSS
+- JavaScript
+- LocalStorage
+- Tailwind CSS
+
+### Uso básico
+
+- Escribe una tarea y añádela
+- Usa filtros para ver tareas
+- Busca tareas por texto
+- Marca como completadas o elimínalas
+
+---
+
+## Funciones principales del proyecto
+
+### createTask(title)
+Crea una nueva tarea con ID único, título y estado de completado.
+
+### addTask(task)
+Añade una tarea al array principal.
+
+### renderTasks()
+Muestra las tareas en pantalla aplicando filtros y búsqueda.
+
+### getFilteredTasks(tasks, filter, searchText)
+Filtra tareas por estado y por texto de búsqueda.
+
+### markAllCompleted()
+Marca todas las tareas como completadas.
+
+### clearCompletedTasks()
+Elimina las tareas completadas.
+
+### updateUI()
+Actualiza la interfaz completa (tareas + estadísticas + guardado).
+
+### saveTasks()
+Guarda las tareas en LocalStorage.
+
+## Futuras mejoras (Roadmap)
+
+- Gestión de empleados
+- Sistema de turnos
+- Vacaciones del personal
+- Formación de empleados
+
+---
+
+## Ejemplos de uso
+
+- Añadir tarea: escribir texto en el input y pulsar “Añadir”
+- Editar tarea: pulsar botón “Editar” en una tarea
+- Eliminar tarea: pulsar botón “Eliminar”
+- Filtrar tareas: usar botones de filtro (todas, pendientes, completadas)
+- Buscar tarea: escribir texto en el buscador
+- Marcar como completada: marcar el checkbox de una tarea
+- Borrar completadas: pulsar botón de eliminar completadas
