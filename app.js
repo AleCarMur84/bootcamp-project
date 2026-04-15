@@ -119,23 +119,29 @@ function getFilteredTasks(tasks, filter, searchText) {
   }
 
   function createTaskElement(task) {
-    const li = document.createElement("li");
+  const li = document.createElement("li");
 
-    li.innerHTML = `
-      <input type="checkbox"
-        class="task-checkbox"
-        data-id="${task.id}"
-        ${task.completed ? "checked" : ""}>
-      <span style="text-decoration: ${task.completed ? 'line-through' : 'none'}">
-        ${task.title}
-      </span>
-      <button class="delete-task" data-id="${task.id}">
-        Eliminar
-      </button>
-    `;
+  li.innerHTML = `
+    <input type="checkbox"
+      class="task-checkbox"
+      data-id="${task.id}"
+      ${task.completed ? "checked" : ""}>
 
-    return li;
-  }
+    <span style="text-decoration: ${task.completed ? 'line-through' : 'none'}">
+      ${task.title}
+    </span>
+
+    <button class="delete-task" data-id="${task.id}">
+      Eliminar
+    </button>
+
+    <button class="edit-task" data-id="${task.id}">
+      Editar
+    </button>
+  `;
+
+  return li;
+}
 
   function renderTaskList(tasks) {
     taskListElement.innerHTML = "";
