@@ -1,0 +1,8 @@
+$kind: http-request
+name: http://localhost:3000/api/v1/tasks
+url: http://localhost:3000/api/v1/tasks
+method: GET
+body:
+  type: json
+  content: ""
+order: 1776419183995
