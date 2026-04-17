@@ -18,18 +18,15 @@ const createTask = (req, res) => {
   res.status(201).json(newTask);
 };
 
-const deleteTask = (req, res) => {
+const deleteTask = (req, res, next) => {
   try {
     taskService.eliminarTarea(req.params.id);
     res.status(204).send();
-  } catch (error) {
-    if (error.message === 'NOT_FOUND') {
-      return res.status(404).json({ error: 'Tarea no encontrada' });
-    }
-
-    res.status(500).json({ error: 'Error interno del servidor' });
+  } catch (err) {
+    next(err);
   }
 };
+  
 
 module.exports = {
   getTasks,
