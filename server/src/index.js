@@ -1,4 +1,4 @@
-require('./config/env');
+require('./config/env.js');
 
 const express = require('express');
 const cors = require('cors');
