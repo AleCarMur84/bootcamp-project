@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 app.use((err, req, res, next) => {
   console.error(err);
   console.log('ERROR REAL:', err.message);
-  
+
   if (err.message === 'NOT_FOUND') {
     return res.status(404).json({ error: 'Tarea no encontrada' });
   }
@@ -34,6 +34,4 @@ app.use((err, req, res, next) => {
 // Puerto
 const PORT = 3000;
 
-app.listen(PORT, () => {
-  console.log('SERVIDOR VIVO EN 3000');
-});
+module.exports = app;
