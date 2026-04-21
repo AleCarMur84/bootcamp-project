@@ -22,7 +22,13 @@ app.get('/', (req, res) => {
 // Error handler (opcional pero correcto)
 app.use((err, req, res, next) => {
   console.error(err);
-  res.status(500).json({ error: 'Error interno del servidor' });
+  console.log('ERROR REAL:', err.message);
+  
+  if (err.message === 'NOT_FOUND') {
+    return res.status(404).json({ error: 'Tarea no encontrada' });
+  }
+
+  return res.status(500).json({ error: 'Error interno del servidor' });
 });
 
 // Puerto

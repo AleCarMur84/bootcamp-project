@@ -108,3 +108,80 @@ Guarda las tareas en LocalStorage.
 - Buscar tarea: escribir texto en el buscador
 - Marcar como completada: marcar el checkbox de una tarea
 - Borrar completadas: pulsar botón de eliminar completadas
+
+# TaskFlow API
+
+## Descripción
+API REST para gestión de tareas creada con Node.js + Express.
+
+---
+
+## Tecnologías
+- Node.js
+- Express
+- CORS
+
+---
+
+## Estructura del proyecto
+
+server/
+├── src/
+│   ├── config/
+│   ├── controllers/
+│   ├── routes/
+│   ├── services/
+│   └── index.js
+
+---
+
+## Endpoints
+
+### Obtener todas las tareas
+GET /api/v1/tasks
+
+---
+
+### Crear tarea
+POST /api/v1/tasks
+
+Body:
+{
+  "title": "mi tarea"
+}
+
+---
+
+### Eliminar tarea
+DELETE /api/v1/tasks/:id
+
+---
+
+## Manejo de errores
+
+404 NOT_FOUND → Tarea no encontrada  
+500 → Error interno del servidor
+
+---
+
+## Pruebas en Postman
+
+Crear tarea:
+POST /api/v1/tasks
+
+Obtener tareas:
+GET /api/v1/tasks
+
+Eliminar tarea existente:
+DELETE /api/v1/tasks/:id → 204 No Content
+
+Eliminar tarea inexistente:
+DELETE /api/v1/tasks/999999 → 404 NOT_FOUND
+
+---
+
+## Estado del proyecto
+✔ API REST funcional  
+✔ CRUD completo  
+✔ Manejo de errores implementado  
+✔ Probado con Postman

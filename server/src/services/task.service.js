@@ -16,6 +16,9 @@ const crearTarea = (data) => {
 };
 
 const eliminarTarea = (id) => {
+  console.log('ID recibido en service:', id);
+  console.log('Estado tasks:', tasks);
+
   const index = tasks.findIndex(task => task.id === Number(id));
 
   if (index === -1) {
@@ -30,3 +33,4 @@ module.exports = {
   crearTarea,
   eliminarTarea
 };
+
