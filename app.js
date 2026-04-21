@@ -1,7 +1,43 @@
+import { getTasks, createTask, deleteTask } from './api/client.js';
+
 const taskListElement = document.querySelector("#task-list");
 const statsElement = document.querySelector("#stats");
 
 console.log("JS cargado");
+
+let loading = false;
+let error = null;
+
+let storedTasks = [];
+
+function renderError() {
+  taskListElement.innerHTML = `
+    <p style="color:red;">
+      Error: ${error}
+    </p>
+  `;
+}
+
+async function loadTasks() {
+  try {
+    loading = true;
+    error = null;
+
+    const tasks = await getTasks();
+    storedTasks = tasks;
+
+    loading = false;
+    renderTasks();
+
+  } catch (err) {
+    loading = false;
+    error = err.message;
+    console.error(err);
+    renderError();
+  }
+}
+
+loadTasks();
 
 const exampleTask = {
   id: Date.now(),
@@ -10,7 +46,7 @@ const exampleTask = {
   createdAt: new Date()
 };
 
-let storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
 let currentFilter = "all";
 let currentSearchQuery = "";
 
@@ -32,7 +68,7 @@ form.addEventListener("submit", handleFormSubmit);
  * @param {Event} e - evento del formulario
  */
 
-function handleFormSubmit(e) {
+  async function handleFormSubmit(e) {
   e.preventDefault();
 
   const title = input.value.trim();
@@ -45,8 +81,8 @@ function handleFormSubmit(e) {
   
   if (exists) return;
 
-  const newTask = createTask(title);
-  addTask(newTask);
+  await createTask(title);
+  loadTasks();
 
   input.value = "";
   updateUI();
@@ -82,6 +118,11 @@ function addTask(task) {
  */
 
 function renderTasks() {
+
+  if (loading) {
+  taskListElement.innerHTML = "<p>Cargando tareas...</p>";
+  return;
+}
   const filteredTasks = getFilteredTasks(
     storedTasks,
     currentFilter,
@@ -166,12 +207,12 @@ function renderStats() {
   `;
 }
 
-taskListElement.addEventListener("click", function (e) {
+taskListElement.addEventListener("click", async function (e) {
   if (e.target.classList.contains("delete-task")) {
     const id = Number(e.target.dataset.id);
 
-    storedTasks = storedTasks.filter(task => task.id !== id);
-    updateUI();
+   await deleteTask(id);
+   loadTasks();
   }
 });
 
@@ -205,7 +246,7 @@ function updateUI() {
 }
 
 function saveTasks() {
-  localStorage.setItem("tasks", JSON.stringify(storedTasks));
+
 }
 
 updateUI();

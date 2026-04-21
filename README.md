@@ -38,29 +38,29 @@ Permite gestionar tareas de forma sencilla, centralizada y eficiente.
 
 ### Funcionalidades
 
-- Crear tareas
-- Editar tareas
-- Eliminar tareas
-- Filtrar tareas (todas, pendientes, completadas)
-- Buscar tareas por texto
-- Marcar todas como completadas
-- Borrar tareas completadas
-- Persistencia con LocalStorage
+Crear tareas
+Editar tareas
+Eliminar tareas
+Filtrar tareas (todas, pendientes, completadas)
+Buscar tareas por texto
+Marcar todas como completadas
+Borrar tareas completadas
+Persistencia con LocalStorage
 
 ### Tecnologías
 
-- HTML
-- CSS
-- JavaScript
-- LocalStorage
-- Tailwind CSS
+HTML
+CSS
+JavaScript
+LocalStorage
+Tailwind CSS
 
 ### Uso básico
 
-- Escribe una tarea y añádela
-- Usa filtros para ver tareas
-- Busca tareas por texto
-- Marca como completadas o elimínalas
+Escribe una tarea y añádela
+Usa filtros para ver tareas
+Busca tareas por texto
+Marca como completadas o elimínalas
 
 ---
 
@@ -92,22 +92,22 @@ Guarda las tareas en LocalStorage.
 
 ## Futuras mejoras (Roadmap)
 
-- Gestión de empleados
-- Sistema de turnos
-- Vacaciones del personal
-- Formación de empleados
+Gestión de empleados
+Sistema de turnos
+Vacaciones del personal
+Formación de empleados
 
 ---
 
 ## Ejemplos de uso
 
-- Añadir tarea: escribir texto en el input y pulsar “Añadir”
-- Editar tarea: pulsar botón “Editar” en una tarea
-- Eliminar tarea: pulsar botón “Eliminar”
-- Filtrar tareas: usar botones de filtro (todas, pendientes, completadas)
-- Buscar tarea: escribir texto en el buscador
-- Marcar como completada: marcar el checkbox de una tarea
-- Borrar completadas: pulsar botón de eliminar completadas
+Añadir tarea: escribir texto en el input y pulsar “Añadir”
+Editar tarea: pulsar botón “Editar” en una tarea
+Eliminar tarea: pulsar botón “Eliminar”
+Filtrar tareas: usar botones de filtro (todas, pendientes, completadas)
+Buscar tarea: escribir texto en el buscador
+Marcar como completada: marcar el checkbox de una tarea
+Borrar completadas: pulsar botón de eliminar completadas
 
 # TaskFlow API
 
@@ -117,9 +117,9 @@ API REST para gestión de tareas creada con Node.js + Express.
 ---
 
 ## Tecnologías
-- Node.js
-- Express
-- CORS
+Node.js
+Express
+CORS
 
 ---
 
@@ -181,7 +181,82 @@ DELETE /api/v1/tasks/999999 → 404 NOT_FOUND
 ---
 
 ## Estado del proyecto
-✔ API REST funcional  
-✔ CRUD completo  
-✔ Manejo de errores implementado  
-✔ Probado con Postman
+PI REST funcional  ok
+CRUD completo  ok
+Manejo de errores implementado  ok
+Probado con Postman ok
+
+## Arquitectura del proyecto
+
+El proyecto está dividido en dos partes principales:
+
+### Frontend
+Maneja la interfaz de usuario
+Se encarga de renderizar tareas
+Consume la API del backend mediante fetch
+Gestiona estados de carga, éxito y error
+
+### Backend (Node.js + Express)
+Expone una API REST en `/api/v1/tasks`
+Gestiona la lógica de negocio en services
+Controla las peticiones mediante controllers
+Define rutas en routes
+
+## Middlewares en Express
+
+El servidor utiliza middlewares para procesar las peticiones antes de llegar a las rutas.
+
+### Middlewares utilizados
+
+`express.json()`  
+  Permite leer y parsear el cuerpo de las peticiones en formato JSON.
+
+`cors()`  
+  Habilita el acceso al backend desde el frontend, evitando bloqueos por CORS.
+
+Middleware de errores global  
+Captura cualquier error no controlado en la aplicación y devuelve una respuesta adecuada:
+404 si el error es `NOT_FOUND`
+500 para errores internos del servidor
+
+## Ejemplos de uso de la API REST
+
+### Obtener todas las tareas
+GET /api/v1/tasks
+
+Respuesta:
+[
+  {
+    "id": 123456,
+    "title": "Ejemplo tarea",
+    "completed": false
+  }
+]
+
+---
+
+### Crear una tarea
+POST /api/v1/tasks
+
+Body:
+{
+  "title": "Nueva tarea"
+}
+
+Respuesta:
+{
+  "id": 123457,
+  "title": "Nueva tarea",
+  "completed": false
+}
+
+---
+
+### Eliminar una tarea
+DELETE /api/v1/tasks/:id
+
+Ejemplo:
+DELETE /api/v1/tasks/123456
+
+Respuesta:
+204 No Content
